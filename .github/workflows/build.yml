@@ -93,6 +93,9 @@ jobs:
     name: Run Cypress Tests
     runs-on: ubuntu-latest
     needs: [build]
+    permissions:
+      contents: read
+      id-token: write
 
     strategy:
       matrix:
