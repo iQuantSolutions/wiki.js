@@ -62,16 +62,16 @@ jobs:
         file: dev/build/Dockerfile
         push: true
         tags: |
-          ${{ steps.login-ecr.outputs.registry }}/qa/wiki:canary
-          ${{ steps.login-ecr.outputs.registry }}/qa/wiki:canary-${{ env.REL_VERSION_STRICT }}
-          ${{ steps.login-ecr.outputs.registry }}/qa/wiki:canary-${{ github.sha }}
+          ${{ steps.login-ecr.outputs.registry }}/qa/wiki:latest
+          ${{ steps.login-ecr.outputs.registry }}/qa/wiki:${{ env.REL_VERSION_STRICT }}
+          ${{ steps.login-ecr.outputs.registry }}/qa/wiki:${{ github.sha }}
 
     - name: Extract compiled files
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
       run: |
         mkdir -p _dist
-        docker create --name wiki $ECR_REGISTRY/qa/wiki:canary-$REL_VERSION_STRICT
+        docker create --name wiki $ECR_REGISTRY/qa/wiki:$REL_VERSION_STRICT
         docker cp wiki:/wiki _dist
         docker rm wiki
         rm _dist/wiki/config.yml
@@ -156,11 +156,11 @@ jobs:
         echo "Using major $MAJOR and minor $MINOR..."
         echo "Creating the manifests..."
 
-        docker manifest create $ECR_REGISTRY/production/wiki:$REL_VERSION_STRICT $ECR_REGISTRY/qa/wiki:canary-$REL_VERSION_STRICT
-        docker manifest create $ECR_REGISTRY/production/wiki:$MAJOR $ECR_REGISTRY/qa/wiki:canary-$REL_VERSION_STRICT
-        docker manifest create $ECR_REGISTRY/production/wiki:$MAJORMINOR $ECR_REGISTRY/qa/wiki:canary-$REL_VERSION_STRICT
-        docker manifest create $ECR_REGISTRY/production/wiki:$GITHUB_SHA $ECR_REGISTRY/qa/wiki:canary-$REL_VERSION_STRICT
-        docker manifest create $ECR_REGISTRY/production/wiki:latest $ECR_REGISTRY/qa/wiki:canary-$REL_VERSION_STRICT
+        docker manifest create $ECR_REGISTRY/production/wiki:$REL_VERSION_STRICT $ECR_REGISTRY/qa/wiki:$REL_VERSION_STRICT
+        docker manifest create $ECR_REGISTRY/production/wiki:$MAJOR $ECR_REGISTRY/qa/wiki:$REL_VERSION_STRICT
+        docker manifest create $ECR_REGISTRY/production/wiki:$MAJORMINOR $ECR_REGISTRY/qa/wiki:$REL_VERSION_STRICT
+        docker manifest create $ECR_REGISTRY/production/wiki:$GITHUB_SHA $ECR_REGISTRY/qa/wiki:$REL_VERSION_STRICT
+        docker manifest create $ECR_REGISTRY/production/wiki:latest $ECR_REGISTRY/qa/wiki:$REL_VERSION_STRICT
 
         echo "Pushing the manifests..."
 
