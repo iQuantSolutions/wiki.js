@@ -71,6 +71,7 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
       run: |
         mkdir -p _dist
+        docker tag $ECR_REGISTRY/qa/wiki:$REL_VERSION_STRICT qa/wiki:$REL_VERSION_STRICT
         docker create --name wiki $ECR_REGISTRY/qa/wiki:$REL_VERSION_STRICT
         docker cp wiki:/wiki _dist
         docker rm wiki
