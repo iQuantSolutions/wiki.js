@@ -10,6 +10,7 @@ on:
 
 jobs:
   build-do-image:
+    if: false # DISABLED, WE DON'T NEED IT
     name: Build DigitalOcean Image
     runs-on: ubuntu-latest
 
