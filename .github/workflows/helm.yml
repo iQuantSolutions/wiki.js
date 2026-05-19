@@ -11,13 +11,14 @@ on:
 
 jobs:
   build:
+    if: false # DISABLED, WE DON'T NEED IT
     name: Update Chart
     runs-on: ubuntu-latest
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v6
-      
+
       - name: Package and Push Chart
         run: |
           export CHARTVER=$(yq '.version' dev/helm/Chart.yaml)
