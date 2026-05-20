@@ -140,7 +140,7 @@ jobs:
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
     environment: prod
-    needs: [build]
+    needs: [cypress]
     permissions:
       id-token: write
       contents: write
