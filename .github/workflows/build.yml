@@ -64,6 +64,7 @@ jobs:
         context: .
         file: dev/build/Dockerfile
         push: true
+        platforms: linux/amd64
         cache-from: type=registry,ref=${{ steps.login-ecr.outputs.registry }}/qa/wiki:buildcache
         cache-to: type=registry,mode=max,image-manifest=true,oci-mediatypes=true,ref=${{ steps.login-ecr.outputs.registry }}/qa/wiki:buildcache
         tags: |
@@ -176,19 +177,20 @@ jobs:
         echo "Using major $MAJOR and minor $MINOR..."
         echo "Creating the manifests..."
 
-        docker manifest create $ECR_REGISTRY/production/wiki:$REL_VERSION_STRICT $ECR_REGISTRY/qa/wiki:$REL_VERSION_STRICT
-        docker manifest create $ECR_REGISTRY/production/wiki:$MAJOR $ECR_REGISTRY/qa/wiki:$REL_VERSION_STRICT
-        docker manifest create $ECR_REGISTRY/production/wiki:$MAJORMINOR $ECR_REGISTRY/qa/wiki:$REL_VERSION_STRICT
-        docker manifest create $ECR_REGISTRY/production/wiki:$GITHUB_SHA $ECR_REGISTRY/qa/wiki:$REL_VERSION_STRICT
-        docker manifest create $ECR_REGISTRY/production/wiki:latest $ECR_REGISTRY/qa/wiki:$REL_VERSION_STRICT
+        docker pull $ECR_REGISTRY/qa/wiki:$REL_VERSION_STRICT
+        docker tag $ECR_REGISTRY/qa/wiki:$REL_VERSION_STRICT $ECR_REGISTRY/production/wiki:$REL_VERSION_STRICT
+        docker tag $ECR_REGISTRY/qa/wiki:$REL_VERSION_STRICT $ECR_REGISTRY/production/wiki:$MAJOR
+        docker tag $ECR_REGISTRY/qa/wiki:$REL_VERSION_STRICT $ECR_REGISTRY/production/wiki:$MAJORMINOR
+        docker tag $ECR_REGISTRY/qa/wiki:$REL_VERSION_STRICT $ECR_REGISTRY/production/wiki:$GITHUB_SHA
+        docker tag $ECR_REGISTRY/qa/wiki:$REL_VERSION_STRICT $ECR_REGISTRY/production/wiki:latest
 
         echo "Pushing the manifests..."
 
-        docker manifest push -p $ECR_REGISTRY/production/wiki:$REL_VERSION_STRICT
-        docker manifest push -p $ECR_REGISTRY/production/wiki:$MAJOR
-        docker manifest push -p $ECR_REGISTRY/production/wiki:$MAJORMINOR
-        docker manifest push -p $ECR_REGISTRY/production/wiki:$GITHUB_SHA
-        docker manifest push -p $ECR_REGISTRY/production/wiki:latest
+        docker push $ECR_REGISTRY/production/wiki:$REL_VERSION_STRICT
+        docker push $ECR_REGISTRY/production/wiki:$MAJOR
+        docker push $ECR_REGISTRY/production/wiki:$MAJORMINOR
+        docker push $ECR_REGISTRY/production/wiki:$GITHUB_SHA
+        docker push $ECR_REGISTRY/production/wiki:latest
 
     - name: Download Linux Build
       uses: actions/download-artifact@v4
