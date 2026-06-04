@@ -8,7 +8,7 @@ requirements:
 props:
   sdPosition:
     type: String
-    default: 'left'
+    default: 'right'
     title: Table of Contents Position
     hint: Should the content sidebar be shown on the left or right.
     enum:
@@ -19,7 +19,7 @@ props:
     icon: mdi-border-vertical
   showTOC:
     type: Boolean
-    default: false
+    default: true
     title: Display the Table of Contents
     order: 2
   showTags:
