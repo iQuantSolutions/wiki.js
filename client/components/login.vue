@@ -81,21 +81,21 @@
               @click='login'
               :loading='isLoading'
               ) {{ $t('auth:actions.login') }}
-            .text-center.mt-5
+            .text-center
               v-btn.text-none(
                 text
-                rounded
-                color='grey darken-3'
+                color='primary'
+                @click.stop.prevent='forgotPassword'
+                href='#forgot'
+                ): .caption Access Via Platform
+          .text-center
+                v-btn.text-none(
+                text
+                color='primary'
                 @click.stop.prevent='forgotPassword'
                 href='#forgot'
                 ): .caption {{ $t('auth:forgotPasswordLink') }}
-              v-btn.text-none(
-                v-if='selectedStrategyKey === `local` && selectedStrategy.selfRegistration'
-                color='indigo darken-2'
-                text
-                rounded
-                href='/register'
-                ): .caption {{ $t('auth:switchToRegister.link') }}
+
         //-------------------------------------------------
         //- FORGOT PASSWORD FORM
         //-------------------------------------------------
@@ -273,12 +273,15 @@ export default {
       default: null
     }
   },
-  data () {
+  data() {
     return {
       error: false,
       strategies: [],
       selectedStrategyKey: 'unselected',
-      selectedStrategy: { key: 'unselected', strategy: { useForm: false, usernameType: 'email' } },
+      selectedStrategy: {
+        key: 'unselected',
+        strategy: { useForm: false, usernameType: 'email' }
+      },
       screen: 'login',
       username: '',
       password: '',
@@ -300,14 +303,16 @@ export default {
   },
   computed: {
     activeModal: sync('editor/activeModal'),
-    siteTitle () {
+    siteTitle() {
       return siteConfig.title
     },
-    isSocialShown () {
+    isSocialShown() {
       return this.strategies.length > 1
     },
-    logoUrl () { return siteConfig.logoUrl },
-    filteredStrategies () {
+    logoUrl() {
+      return siteConfig.logoUrl
+    },
+    filteredStrategies() {
       const qParams = new URLSearchParams(window.location.search)
       if (this.hideLocal && !qParams.has('all')) {
         return _.reject(this.strategies, ['key', 'local'])
@@ -315,17 +320,17 @@ export default {
         return this.strategies
       }
     },
-    isUsernameEmail () {
+    isUsernameEmail() {
       return this.selectedStrategy.strategy.usernameType === `email`
     }
   },
   watch: {
-    filteredStrategies (newValue, oldValue) {
+    filteredStrategies(newValue, oldValue) {
       if (_.head(newValue).strategy.useForm) {
         this.selectedStrategyKey = _.head(newValue).key
       }
     },
-    selectedStrategyKey (newValue, oldValue) {
+    selectedStrategyKey(newValue, oldValue) {
       this.selectedStrategy = _.find(this.strategies, ['key', newValue])
       if (this.screen === 'changePwd') {
         return
@@ -341,7 +346,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.isShown = true
     if (this.changePwdContinuationToken) {
       this.screen = 'changePwd'
@@ -352,7 +357,7 @@ export default {
     /**
      * LOGIN
      */
-    async login () {
+    async login() {
       this.errorShown = false
       if (this.username.length < 2) {
         this.errorMessage = this.$t('auth:invalidEmailUsername')
@@ -369,9 +374,17 @@ export default {
         try {
           const resp = await this.$apollo.mutate({
             mutation: gql`
-              mutation($username: String!, $password: String!, $strategy: String!) {
+              mutation (
+                $username: String!
+                $password: String!
+                $strategy: String!
+              ) {
                 authentication {
-                  login(username: $username, password: $password, strategy: $strategy) {
+                  login(
+                    username: $username
+                    password: $password
+                    strategy: $strategy
+                  ) {
                     responseResult {
                       succeeded
                       errorCode
@@ -419,7 +432,7 @@ export default {
     /**
      * VERIFY TFA CODE
      */
-    async verifySecurityCode (setup = false) {
+    async verifySecurityCode(setup = false) {
       if (this.securityCode.length !== 6) {
         this.$store.commit('showNotification', {
           style: 'red',
@@ -438,17 +451,17 @@ export default {
         try {
           const resp = await this.$apollo.mutate({
             mutation: gql`
-              mutation(
+              mutation (
                 $continuationToken: String!
                 $securityCode: String!
                 $setup: Boolean
-                ) {
+              ) {
                 authentication {
                   loginTFA(
                     continuationToken: $continuationToken
                     securityCode: $securityCode
                     setup: $setup
-                    ) {
+                  ) {
                     responseResult {
                       succeeded
                       errorCode
@@ -496,19 +509,16 @@ export default {
     /**
      * CHANGE PASSWORD
      */
-    async changePassword () {
+    async changePassword() {
       this.loaderColor = 'grey darken-4'
       this.loaderTitle = this.$t('auth:changePwd.loading')
       this.isLoading = true
       try {
         const resp = await this.$apollo.mutate({
           mutation: gql`
-            mutation (
-              $continuationToken: String!
-              $newPassword: String!
-            ) {
+            mutation ($continuationToken: String!, $newPassword: String!) {
               authentication {
-                loginChangePassword (
+                loginChangePassword(
                   continuationToken: $continuationToken
                   newPassword: $newPassword
                 ) {
@@ -531,7 +541,11 @@ export default {
           }
         })
         if (_.has(resp, 'data.authentication.loginChangePassword')) {
-          let respObj = _.get(resp, 'data.authentication.loginChangePassword', {})
+          let respObj = _.get(
+            resp,
+            'data.authentication.loginChangePassword',
+            {}
+          )
           if (respObj.responseResult.succeeded === true) {
             this.handleLoginResponse(respObj)
           } else {
@@ -553,7 +567,7 @@ export default {
     /**
      * SWITCH TO FORGOT PASSWORD SCREEN
      */
-    forgotPassword () {
+    forgotPassword() {
       this.screen = 'forgot'
       this.$nextTick(() => {
         this.$refs.iptForgotPwdEmail.focus()
@@ -562,20 +576,16 @@ export default {
     /**
      * FORGOT PASSWORD SUBMIT
      */
-    async forgotPasswordSubmit () {
+    async forgotPasswordSubmit() {
       this.loaderColor = 'grey darken-4'
       this.loaderTitle = this.$t('auth:forgotPasswordLoading')
       this.isLoading = true
       try {
         const resp = await this.$apollo.mutate({
           mutation: gql`
-            mutation (
-              $email: String!
-            ) {
+            mutation ($email: String!) {
               authentication {
-                forgotPassword (
-                  email: $email
-                ) {
+                forgotPassword(email: $email) {
                   responseResult {
                     succeeded
                     errorCode
@@ -591,7 +601,11 @@ export default {
           }
         })
         if (_.has(resp, 'data.authentication.forgotPassword.responseResult')) {
-          let respObj = _.get(resp, 'data.authentication.forgotPassword.responseResult', {})
+          let respObj = _.get(
+            resp,
+            'data.authentication.forgotPassword.responseResult',
+            {}
+          )
           if (respObj.succeeded === true) {
             this.$store.commit('showNotification', {
               style: 'success',
@@ -615,7 +629,7 @@ export default {
       }
       this.isLoading = false
     },
-    handleLoginResponse (respObj) {
+    handleLoginResponse(respObj) {
       this.continuationToken = respObj.continuationToken
       if (respObj.mustChangePwd === true) {
         this.screen = 'changePwd'
@@ -641,10 +655,17 @@ export default {
       } else {
         this.loaderColor = 'green darken-1'
         this.loaderTitle = this.$t('auth:loginSuccess')
-        Cookies.set('jwt', respObj.jwt, { expires: 365, secure: window.location.protocol === 'https:' })
+        Cookies.set('jwt', respObj.jwt, {
+          expires: 365,
+          secure: window.location.protocol === 'https:'
+        })
         _.delay(() => {
           const loginRedirect = Cookies.get('loginRedirect')
-          const isValidRedirect = loginRedirect && loginRedirect.startsWith('/') && !loginRedirect.startsWith('//') && !loginRedirect.includes('://')
+          const isValidRedirect =
+            loginRedirect &&
+            loginRedirect.startsWith('/') &&
+            !loginRedirect.startsWith('//') &&
+            !loginRedirect.includes('://')
           if (loginRedirect === '/' && respObj.redirect) {
             Cookies.remove('loginRedirect')
             window.location.replace(respObj.redirect)
@@ -687,9 +708,13 @@ export default {
           }
         }
       `,
-      update: (data) => _.sortBy(data.authentication.activeStrategies, ['order']),
-      watchLoading (isLoading) {
-        this.$store.commit(`loading${isLoading ? 'Start' : 'Stop'}`, 'login-strategies-refresh')
+      update: (data) =>
+        _.sortBy(data.authentication.activeStrategies, ['order']),
+      watchLoading(isLoading) {
+        this.$store.commit(
+          `loading${isLoading ? 'Start' : 'Stop'}`,
+          'login-strategies-refresh'
+        )
       }
     }
   }
@@ -697,103 +722,107 @@ export default {
 </script>
 
 <style lang="scss">
-  .login {
-    // background-image: url('/_assets/img/splash/1.jpg');
-    background-color: mc('grey', '900');
-    background-size: cover;
-    background-position: center center;
-    width: 100%;
+.login {
+  // background-image: url('/_assets/img/splash/1.jpg');
+  background-color: mc("grey", "900");
+  background-size: cover;
+  background-position: center center;
+  width: 100%;
+  height: 100%;
+
+  &-sd {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-left: 1px solid rgba(255, 255, 255, 0.85);
+    border-right: 1px solid rgba(255, 255, 255, 0.85);
+    width: 450px;
     height: 100%;
+    margin-left: 5vw;
 
-    &-sd {
-      background-color: rgba(255,255,255,.8);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-left: 1px solid rgba(255,255,255,.85);
-      border-right: 1px solid rgba(255,255,255,.85);
-      width: 450px;
-      height: 100%;
-      margin-left: 5vw;
-
-      @at-root .no-backdropfilter & {
-        background-color: rgba(255,255,255,.95);
-      }
-
-      @include until($tablet) {
-        margin-left: 0;
-        width: 100%;
-      }
+    @at-root .no-backdropfilter & {
+      background-color: rgba(255, 255, 255, 0.95);
     }
 
-    &-logo {
-      padding: 12px 0 0 12px;
-      width: 58px;
-      height: 58px;
-      background-color: #222;
-      margin-left: 12px;
-      border-bottom-left-radius: 7px;
-      border-bottom-right-radius: 7px;
-    }
-
-    &-title {
-      height: 58px;
-      padding-left: 12px;
-      display: flex;
-      align-items: center;
-      text-shadow: .5px .5px #FFF;
-    }
-
-    &-subtitle {
-      padding: 24px 12px 12px 12px;
-      color: #111;
-      font-weight: 500;
-      text-shadow: 1px 1px rgba(255,255,255,.5);
-      background-image: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,.15));
-      text-align: center;
-      border-bottom: 1px solid rgba(0,0,0,.3);
-    }
-
-    &-info {
-      border-top: 1px solid rgba(255,255,255,.85);
-      background-color: rgba(255,255,255,.15);
-      border-bottom: 1px solid rgba(0,0,0,.15);
-      padding: 12px;
-      font-size: 13px;
-      text-align: center;
-      color: mc('grey', '900');
-    }
-
-    &-list {
-      border-top: 1px solid rgba(255,255,255,.85);
-      padding: 12px;
-    }
-
-    &-form {
-      padding: 12px;
-      border-top: 1px solid rgba(255,255,255,.85);
-    }
-
-    &-main {
-      flex: 1 0 100vw;
-      height: 100vh;
-    }
-
-    &-tfa {
-      background-color: #EEE;
-      border: 7px solid #FFF;
-
-      &-field input {
-        text-align: center;
-      }
-
-      &-qr {
-        background-color: #FFF;
-        padding: 5px;
-        border-radius: 5px;
-        width: 200px;
-        height: 200px;
-        margin: 0 auto;
-      }
+    @include until($tablet) {
+      margin-left: 0;
+      width: 100%;
     }
   }
+
+  &-logo {
+    padding: 12px 0 0 12px;
+    width: 58px;
+    height: 58px;
+    background-color: #222;
+    margin-left: 12px;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+  }
+
+  &-title {
+    height: 58px;
+    padding-left: 12px;
+    display: flex;
+    align-items: center;
+    text-shadow: 0.5px 0.5px #fff;
+  }
+
+  &-subtitle {
+    padding: 24px 12px 12px 12px;
+    color: #111;
+    font-weight: 500;
+    text-shadow: 1px 1px rgba(255, 255, 255, 0.5);
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0.15)
+    );
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  }
+
+  &-info {
+    border-top: 1px solid rgba(255, 255, 255, 0.85);
+    background-color: rgba(255, 255, 255, 0.15);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    padding: 12px;
+    font-size: 13px;
+    text-align: center;
+    color: mc("grey", "900");
+  }
+
+  &-list {
+    border-top: 1px solid rgba(255, 255, 255, 0.85);
+    padding: 12px;
+  }
+
+  &-form {
+    padding: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.85);
+  }
+
+  &-main {
+    flex: 1 0 100vw;
+    height: 100vh;
+  }
+
+  &-tfa {
+    background-color: #eee;
+    border: 7px solid #fff;
+
+    &-field input {
+      text-align: center;
+    }
+
+    &-qr {
+      background-color: #fff;
+      padding: 5px;
+      border-radius: 5px;
+      width: 200px;
+      height: 200px;
+      margin: 0 auto;
+    }
+  }
+}
 </style>
