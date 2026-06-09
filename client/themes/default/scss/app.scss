@@ -31,20 +31,22 @@
   align-items: center;
   font-family: "Inter", sans-serif !important;
   font-optical-sizing: auto !important;
+  color: #2D3748 !important;
 
 
   &>div {
     width: 348px !important;
-    height: 570px !important;
+    height: auto;
+    max-height: 520px !important;
     margin: 0 !important;
-    padding: 1.5rem 1.5rem 0.5rem 1.5rem !important;
+    padding: 1.5rem !important;
     border-radius: var(--xxl, 1.5rem);
     border: 1px solid #E4ECF7;
     background: #FFF;
     box-shadow: 0 4px 32px 0 rgba(13, 24, 41, 0.05);
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: center;
 
     &>div {
       display: flex;
@@ -76,6 +78,7 @@
           line-height: normal !important;
           letter-spacing: -0.02rem !important;
           margin-bottom: 2px !important;
+          font-family: "Inter", sans-serif !important;
         }
       }
     }
@@ -89,13 +92,49 @@
       text-align: center;
       border: none !important;
       line-height: normal !important;
-      margin-bottom: 1rem !important;
 
       .text-subtitle-1 {
         line-height: normal !important;
         letter-spacing: normal !important;
         font-weight: 500 !important;
         font-size: 0.875rem !important;
+        font-family: "Inter", sans-serif !important;
+        margin: 0 !important;
+
+      }
+    }
+
+    .login-list {
+
+      padding: 0 !important;
+
+
+
+      button {
+        border-radius: 0.5rem !important;
+        background: #2051E5 !important;
+        height: 2rem !important;
+        min-width: 78px;
+        padding: 0 !important;
+        margin: 1rem 0 0 0 !important;
+        box-shadow: none !important;
+        color: white;
+
+        .v-btn__content {
+          letter-spacing: normal !important;
+        }
+
+      }
+
+      .v-list-item {
+        border-radius: 0.5rem !important;
+        background: #2051E5 !important;
+        height: 2rem !important;
+        min-width: 78px;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        color: white;
       }
     }
 
@@ -103,7 +142,14 @@
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      margin-bottom: 7rem !important;
+      width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+
+
+      &>div {
+        width: 100%;
+      }
 
       .v-input {
         width: 100% !important;
@@ -134,6 +180,10 @@
         .v-input__icon {
           display: none;
         }
+
+        input::placeholder {
+          color: #CBD5E0 !important;
+        }
       }
 
       button {
@@ -152,9 +202,7 @@
 
 
 
-      .caption {
-        letter-spacing: normal !important;
-      }
+
     }
 
     a {
@@ -165,6 +213,10 @@
         background-color: inherit !important;
       }
     }
+  }
+
+  .caption {
+    letter-spacing: normal !important;
   }
 }
 
