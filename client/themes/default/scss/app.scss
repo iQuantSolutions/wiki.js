@@ -6,17 +6,219 @@
 }
 
 .v-application {
-    color: #2D3748 !important;
+  color: #2D3748 !important;
+
   .headline {
     font-size: 2rem !important;
     font-family: 'Inter', sans-serif !important;
   }
+
   .caption {
     font-size: 0.875rem !important;
     font-family: 'Inter', sans-serif !important;
     font-weight: 500 !important;
   }
 }
+
+// LOGIN
+#app>div>div.login {
+
+  background-color: white !important;
+  background-image: none !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Inter", sans-serif !important;
+  font-optical-sizing: auto !important;
+  color: #2D3748 !important;
+
+
+  &>div {
+    width: 348px !important;
+    height: auto;
+    max-height: 520px !important;
+    margin: 0 !important;
+    padding: 1.5rem !important;
+    border-radius: var(--xxl, 1.5rem);
+    border: 1px solid #E4ECF7;
+    background: #FFF;
+    box-shadow: 0 4px 32px 0 rgba(13, 24, 41, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &>div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 !important;
+
+      .login-logo {
+        width: 2rem;
+        height: 2rem;
+        background-color: transparent !important;
+        margin: 0 0 1rem 0 !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+      }
+
+      .login-title {
+        height: auto !important;
+        padding: 0 !important;
+        display: flex;
+        align-items: center;
+        text-shadow: none !important;
+
+        &>div {
+          color: #0D1829 !important;
+          font-size: 1rem !important;
+          font-style: normal !important;
+          font-weight: 600 !important;
+          line-height: normal !important;
+          letter-spacing: -0.02rem !important;
+          margin-bottom: 2px !important;
+          font-family: "Inter", sans-serif !important;
+        }
+      }
+    }
+
+    .login-subtitle {
+      padding: 0 !important;
+      color: #718096 !important;
+      font-weight: 500;
+      text-shadow: none !important;
+      background-image: none !important;
+      text-align: center;
+      border: none !important;
+      line-height: normal !important;
+
+      .text-subtitle-1 {
+        line-height: normal !important;
+        letter-spacing: normal !important;
+        font-weight: 500 !important;
+        font-size: 0.875rem !important;
+        font-family: "Inter", sans-serif !important;
+        margin: 0 !important;
+
+      }
+    }
+
+    .login-list {
+
+      padding: 0 !important;
+
+
+
+      button {
+        border-radius: 0.5rem !important;
+        background: #2051E5 !important;
+        height: 2rem !important;
+        min-width: 78px;
+        padding: 0 !important;
+        margin: 1rem 0 0 0 !important;
+        box-shadow: none !important;
+        color: white;
+
+        .v-btn__content {
+          letter-spacing: normal !important;
+        }
+
+      }
+
+      .v-list-item {
+        border-radius: 0.5rem !important;
+        background: #2051E5 !important;
+        height: 2rem !important;
+        min-width: 78px;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        color: white;
+      }
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+
+
+      &>div {
+        width: 100%;
+      }
+
+      .v-input {
+        width: 100% !important;
+        border-radius: 0.5rem;
+        border: 1px solid #E4ECF7;
+        background: #FFF;
+        padding: 0 !important;
+        margin: 0 !important;
+
+        .v-input__control {
+          height: 2rem !important;
+          min-height: 2rem !important;
+        }
+
+        .v-input__slot {
+          padding: 0.5rem !important;
+          font-size: 0.875rem;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 1.25rem;
+          color: #CBD5E0 !important;
+        }
+
+        #input-20 {
+          padding: 0 !important;
+        }
+
+        .v-input__icon {
+          display: none;
+        }
+
+        input::placeholder {
+          color: #CBD5E0 !important;
+        }
+      }
+
+      button {
+        border-radius: 0.5rem !important;
+        background: #2051E5 !important;
+        height: 2rem !important;
+        min-width: 78px;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+
+        .v-btn__content {
+          letter-spacing: normal !important;
+        }
+      }
+
+
+
+
+    }
+
+    a {
+      height: auto !important;
+
+      &:hover,
+      &::before {
+        background-color: inherit !important;
+      }
+    }
+  }
+
+  .caption {
+    letter-spacing: normal !important;
+  }
+}
+
 
 
 
@@ -117,7 +319,7 @@
   padding-right: 0 !important;
 }
 
-.page-toc-card .v-list-item + .v-list-item {
+.page-toc-card .v-list-item+.v-list-item {
   margin-top: 0.75rem !important;
 }
 
