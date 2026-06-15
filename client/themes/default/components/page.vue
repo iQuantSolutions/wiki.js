@@ -107,7 +107,7 @@ v-app(
           xl2
         )
           v-card.page-toc-card.mb-5(v-if="tocDecoded.length")
-            .overline.pa-5.pb-0(
+            .overline.pa-4.pb-0(
               :class="$vuetify.theme.dark ? `blue--text text--lighten-2` : `primary--text`"
             ) {{ $t("common:page.toc") }}
             v-list.pb-3(
