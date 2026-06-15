@@ -1682,3 +1682,46 @@
 // ---------------
 
 
+.v-treeview .v-treeview-node__root button {
+  display: none
+}
+.v-application .headline,
+.v-application .title {
+  font-family: Inter,sans-serif!important
+}
+.overline.pa-5.pb-0.primary--text {
+  font-family: Inter,sans-serif!important;
+  color: #718096!important;
+  font-size: 12px!important;
+  line-height: 16px!important;
+  font-weight: 500!important;
+  letter-spacing: normal!important
+}
+.page-header-headings .headline {
+  font-size: 2rem!important
+}
+.page-header-headings .caption {
+  font-family: Inter,sans-serif!important;
+  font-size: 14px!important
+}
+.v-application--is-ltr .v-treeview-node__content {
+  margin-left: 0!important
+}
+ .tree-item--link {
+  color: #2d3748!important;
+  font-size: .875rem!important
+}
+
+.v-treeview a {
+    text-decoration: none;
+    color: #2D3748 !important;
+}
+
+.v-btn {
+  letter-spacing: normal !important;
+}
+
+.v-application .success {
+  background-color: mc('green', '500') !important;
+  border-color: mc('green', '500') !important;
+}
