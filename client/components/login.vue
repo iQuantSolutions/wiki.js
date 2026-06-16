@@ -25,22 +25,19 @@ v-app
         .login-subtitle()
           .text-subtitle-1.mt-3.mb-1 Sign in to your account
         .login-list
-          v-btn.mt-2.text-none(
-            width="100%",
-            large,
-            @click="login",
-            :loading="isLoading"
-          ) Access Via Platform
-          //- v-list.elevation-1.radius-7(nav, light)
-          //-   v-list-item-group(v-model="selectedStrategyKey")
-          //-     v-list-item(
-          //-       v-for="(stg, idx) of filteredStrategies",
-          //-       :key="stg.key",
-          //-       :value="stg.key",
-          //-       :color="stg.strategy.color"
-          //-     )
-          //-       v-avatar.mr-3(tile, size="24", v-html="stg.strategy.icon")
-          //-       span.text-none {{ stg.displayName }}
+
+          v-list
+            v-list-item-group(v-model="selectedStrategyKey")
+              v-btn.text-none(
+                  v-if="platformStrategy",
+                  :key="platformStrategy.key",
+                  :value="platformStrategy.key",
+                  width="100%",
+                  large,
+                  @click="login",
+                  :loading="isLoading"
+              )  Access Via Platform
+
       //-------------------------------------------------
       //- LOGIN FORM
       //-------------------------------------------------
@@ -326,6 +323,9 @@ export default {
     },
     logoUrl() {
       return siteConfig.logoUrl
+    },
+    platformStrategy() {
+      return _.find(this.strategies, s => s.displayName === 'Platform Access') || null
     },
     filteredStrategies() {
       const qParams = new URLSearchParams(window.location.search)
