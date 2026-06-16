@@ -108,9 +108,8 @@ v-app(
         )
           v-card.page-toc-card.mb-5(v-if="tocDecoded.length")
             .overline.pa-4.pb-0(
-              :class="$vuetify.theme.dark ? `blue--text text--lighten-2` : `primary--text`"
             ) {{ $t("common:page.toc") }}
-            v-list.pb-3(
+            v-list.p-3(
               dense,
               nav,
               :class="$vuetify.theme.dark ? `darken-3-d3` : ``"
@@ -309,7 +308,6 @@ v-app(
                       fab,
                       small,
                       color="white",
-                      light,
                       v-on="on",
                       @click="pageHistory"
                     )
@@ -325,7 +323,6 @@ v-app(
                       fab,
                       small,
                       color="white",
-                      light,
                       v-on="on",
                       @click="pageSource"
                     )
@@ -341,7 +338,6 @@ v-app(
                       fab,
                       small,
                       color="white",
-                      light,
                       v-on="on",
                       @click="pageConvert"
                     )
@@ -357,7 +353,6 @@ v-app(
                       fab,
                       small,
                       color="white",
-                      light,
                       v-on="on",
                       @click="pageDuplicate"
                     )
@@ -373,7 +368,6 @@ v-app(
                       fab,
                       small,
                       color="white",
-                      light,
                       v-on="on",
                       @click="pageMove"
                     )
