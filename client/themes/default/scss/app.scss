@@ -1690,7 +1690,9 @@
 .v-application .title {
   font-family: Inter, sans-serif !important
 }
-
+.v-application .caption {
+  font-family: Inter,sans-serif!important
+}
 .overline.pa-5.pb-0.primary--text {
   font-family: Inter, sans-serif !important;
   color: #718096 !important;
@@ -1727,9 +1729,10 @@
   letter-spacing: normal !important;
 }
 
-.v-application .success {
-  background-color: mc('green', '500') !important;
-  border-color: mc('green', '500') !important;
+.v-application .theme--dark.v-btn.success,
+.v-application .theme--light.v-btn.success {
+  background-color: #2e7d32!important;
+  border-color: #2e7d32!important
 }
 
 .login-list {
@@ -1738,3 +1741,4 @@
     width: 100% !important;
   }
 }
+
