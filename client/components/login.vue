@@ -34,7 +34,7 @@ v-app
                   :value="platformStrategy.key",
                   width="100%",
                   large,
-                  @click="login",
+                  @click='selectedStrategyKey = platformStrategy.key'
                   :loading="isLoading"
               )  Access Via Platform
 
