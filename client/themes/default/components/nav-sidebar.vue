@@ -44,6 +44,7 @@
           :href='item.t'
           :target='item.y === `externalblank` ? `_blank` : `_self`'
           :rel='item.y === `externalblank` ? `noopener` : ``'
+          :title='item.l'
           )
           v-list-item-avatar(size='24', tile)
             v-icon(v-if='item.c.match(/fa[a-z] fa-/)', size='19') {{ item.c }}
@@ -65,8 +66,8 @@
       template(v-slot:prepend="{ item, open }")
 
       template(v-slot:label="{ item }")
-        div(:class="['tree-item', !item.children ? 'tree-item--link' : '']")
-          a(v-if="!item.children" :href="'/'+item.locale+'/'+item.path")
+        div(:class="['tree-item', !item.children ? 'tree-item--link' : '']" :title="formatTitle(item.name)" :style="item.path === path ? {color: '#2051E5'} : null")
+          a(v-if="!item.children" :href="'/'+item.locale+'/'+item.path" :style="item.path === path ? {color: '#2051E5'} : null")
             span {{formatTitle(item.name)}}
           span(v-else) {{formatTitle(item.name)}}
 
@@ -84,11 +85,11 @@
           v-list-item-title {{ currentParent.title }}
         v-subheader.pl-4 {{$t('common:sidebar.currentDirectory')}}
       template(v-for='item of currentItems')
-        v-list-item(v-if='item.isFolder', :key='`childfolder-` + item.id', @click='fetchBrowseItems(item)')
+        v-list-item(v-if='item.isFolder', :key='`childfolder-` + item.id', @click='fetchBrowseItems(item)', :title='item.title')
           v-list-item-avatar(size='24')
             v-icon mdi-folder
           v-list-item-title {{ item.title }}
-        v-list-item(v-else, :href='`/` + item.locale + `/` + item.path', :key='`childpage-` + item.id', :input-value='path === item.path')
+        v-list-item(v-else, :href='`/` + item.locale + `/` + item.path', :key='`childpage-` + item.id', :input-value='path === item.path', :title='item.title')
           v-list-item-avatar(size='24')
             v-icon mdi-text-box
           v-list-item-title {{ item.title }}
@@ -427,9 +428,10 @@ export default {
     }
   }
   .v-treeview-node__root .tree-item--link {
-    color: #2D3748 !important;
+    color: #2D3748;
     font-size: 0.875rem !important;
   }
+
   a {
     text-decoration: none;
     color: inherit;

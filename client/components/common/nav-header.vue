@@ -187,7 +187,7 @@
 
           //- ACCOUNT
 
-          v-menu(v-if='isAuthenticated', offset-y, bottom, min-width='300', transition='slide-y-transition', left)
+          v-menu(v-if='isAuthenticated', offset-y, bottom, min-width='200', transition='slide-y-transition', left)
             template(v-slot:activator='{ on: menu, attrs }')
               v-tooltip(bottom)
                 template(v-slot:activator='{ on: tooltip }')
@@ -205,12 +205,12 @@
                       v-img(:src='picture.url')
                 span {{$t('common:header.account')}}
             v-list(nav)
-              v-list-item.py-3.grey(:class='$vuetify.theme.dark ? `darken-4-l5` : `lighten-5`')
-                v-list-item-avatar
-                  v-avatar.blue(v-if='picture.kind === `initials`', :size='40')
-                    span.white--text.subheading {{picture.initials}}
-                  v-avatar(v-else-if='picture.kind === `image`', :size='40')
-                    v-img(:src='picture.url')
+              v-list-item(:class='$vuetify.theme.dark ? `darken-4-l5` : `lighten-5`')
+                //- v-list-item-avatar
+                //-   v-avatar.blue(v-if='picture.kind === `initials`', :size='40')
+                //-     span.white--text.subheading {{picture.initials}}
+                //-   v-avatar(v-else-if='picture.kind === `image`', :size='40')
+                //-     v-img(:src='picture.url')
                 v-list-item-content
                   v-list-item-title {{name}}
                   v-list-item-subtitle {{email}}
@@ -220,12 +220,12 @@
               //-     v-list-item-title {{$t('common:header.myWiki')}}
               //-     v-list-item-subtitle.overline Coming soon
               v-list-item(href='/p')
-                v-list-item-action: v-icon(color='blue-grey') mdi-face-profile
-                v-list-item-content
-                  v-list-item-title(:class='$vuetify.theme.dark ? `blue-grey--text text--lighten-3` : `blue-grey--text`') {{$t('common:header.profile')}}
+                //- v-list-item-action: v-icon(color='blue-grey') mdi-face-profile
+
+                v-list-item-title(:class='$vuetify.theme.dark ? `blue-grey--text text--lighten-3` : `blue-grey--text`') {{$t('common:header.profile')}}
               v-list-item(@click='logout')
-                v-list-item-action: v-icon(color='red') mdi-logout
-                v-list-item-title.red--text {{$t('common:header.logout')}}
+                //- v-list-item-action: v-icon(color='red') mdi-logout
+                v-list-item-title {{$t('common:header.logout')}}
 
           v-tooltip(v-else, left)
             template(v-slot:activator='{ on }')

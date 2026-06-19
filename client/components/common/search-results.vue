@@ -19,8 +19,6 @@
         v-list.search-results-items.radius-7.py-0(two-line, dense)
           template(v-for='(item, idx) of results')
             v-list-item(@click='goToPage(item)', @click.middle="goToPageInNewTab(item)", :key='item.id', :class='idx === cursor ? `highlighted` : ``')
-              v-list-item-avatar(tile)
-                img(src='/_assets/svg/icon-selective-highlighting.svg')
               v-list-item-content
                 v-list-item-title(v-text='item.title')
                 v-list-item-subtitle.caption(v-text='item.description')
@@ -49,7 +47,7 @@
         //- v-btn.mx-2(outlined, color='orange', @click='search = ``', v-if='results.length > 0')
         //-   v-icon(left) mdi-content-save
         //-   span {{$t('common:header.searchCopyLink')}}
-        v-btn.mx-2(outlined, color='pink', @click='search = ``')
+        v-btn.mx-2( @click='search = ``')
           v-icon(left) mdi-close
           span {{$t('common:header.searchClose')}}
 </template>
