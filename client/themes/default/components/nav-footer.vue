@@ -1,6 +1,5 @@
 <template lang="pug">
-  v-footer.justify-center(:color='bgColor', inset)
-    .caption.grey--text(:class='$vuetify.theme.dark ? `text--lighten-1` : `text--darken-1`')
+  v-footer.justify-center(inset)
       template(v-if='footerOverride')
         span(v-html='footerOverrideRender + ` |&nbsp;`')
       template(v-else-if='company && company.length > 0 && contentLicense !== ``')

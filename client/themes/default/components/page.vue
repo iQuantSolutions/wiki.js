@@ -420,8 +420,7 @@ v-app(
       small,
       :depressed="this.$vuetify.breakpoint.mdAndUp",
       @click="$vuetify.goTo(0, scrollOpts)",
-      color="primary",
-      dark,
+      color="grey",
       :style="upBtnPosition",
       :aria-label="$t(`common:actions.returnToTop`)"
     )
@@ -591,9 +590,9 @@ export default {
         },
         bar: {
           onlyShowBarOnScroll: false,
-          background: '#42A5F5',
+          background: '#CBD5E0',
           hoverStyle: {
-            background: '#64B5F6'
+            background: '#A0AEC0'
           }
         }
       },

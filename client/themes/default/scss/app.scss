@@ -1690,9 +1690,11 @@
 .v-application .title {
   font-family: Inter, sans-serif !important
 }
+
 .v-application .caption {
-  font-family: Inter,sans-serif!important
+  font-family: Inter, sans-serif !important
 }
+
 .overline.pa-5.pb-0.primary--text {
   font-family: Inter, sans-serif !important;
   color: #718096 !important;
@@ -1722,7 +1724,7 @@
 
 .v-treeview a {
   text-decoration: none;
-  color: #2D3748 !important;
+  color: #2D3748;
 }
 
 .v-btn {
@@ -1731,8 +1733,8 @@
 
 .v-application .theme--dark.v-btn.success,
 .v-application .theme--light.v-btn.success {
-  background-color: #2e7d32!important;
-  border-color: #2e7d32!important
+  background-color: #13CA72 !important;
+  border-color: #13CA72 !important
 }
 
 .login-list {
@@ -1742,3 +1744,79 @@
   }
 }
 
+.menuable__content__active {
+  width: 200px !important;
+}
+
+.v-menu__content--fixed.menuable__content__active>div>.v-list-item {
+  min-height: auto !important;
+
+  .v-list-item__title {
+    font-size: 12px !important;
+    font-weight: 500;
+    padding: 0.5rem 0;
+  }
+
+  .v-list-item__subtitle {
+    font-size: 12px !important;
+    padding: 0.5rem 0 !important;
+  }
+
+  .v-list-item__content {
+    padding: 0 !important;
+
+    .v-list-item__title {
+      font-size: 12px !important;
+      font-weight: 500;
+      padding: 0 !important;
+    }
+
+    .v-list-item__subtitle {
+      font-size: 12px !important;
+      padding: 0 !important;
+    }
+  }
+
+
+  &:first-child {
+    border: 1px solid rgba(0, 0, 0, .08);
+    border-radius: 0.5rem;
+    padding: 0.5rem !important;
+  }
+
+}
+
+
+.v-menu__content {
+  border-radius: 0.5rem !important;
+  border: 1px solid rgba(0, 0, 0, .08);
+  box-shadow: none !important;
+}
+
+.search-results {
+  background-color: rgba(0, 0, 0, .4) !important;
+
+  .search-results-items {
+    border: 1px solid rgba(0, 0, 0, .08);
+    background-color: white !important;
+
+    .v-list-item__title {
+      font-size: 1rem !important;
+    }
+
+    .highlighted {
+      background: none !important;
+    }
+  }
+}
+
+.theme--light.v-footer {
+  background-color: white !important;
+  font-size: 0.875rem !important;
+  border-top: 1px solid rgba(0, 0, 0, .08);
+}
+
+.v-application .success {
+    background-color: #13CA72 !important;
+  border-color: #13CA72 !important
+}
