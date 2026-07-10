@@ -409,7 +409,7 @@ v-app(
   nav-footer
   notify
   search-results
-  v-fab-transition
+  v-fade-transition
     v-btn(
       v-if="upBtnShown",
       fab,
@@ -419,12 +419,12 @@ v-app(
       :left="!$vuetify.rtl",
       small,
       :depressed="this.$vuetify.breakpoint.mdAndUp",
+      :ripple="false",
       @click="$vuetify.goTo(0, scrollOpts)",
-      color="grey",
-      :style="upBtnPosition",
+      :style="`${upBtnPosition} background-color: #0D1829; border: 1px solid #2D3748; color: white; border-radius: 0.5rem;`",
       :aria-label="$t(`common:actions.returnToTop`)"
     )
-      v-icon mdi-arrow-up
+      v-icon(size="16") mdi-arrow-up
 </template>
 
 <script>

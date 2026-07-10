@@ -1,51 +1,10 @@
 .notfound {
-  background: linear-gradient(to bottom, darken(mc('red', '900'), 25%) 0%, mc('red', '600') 100%);
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  color: mc('grey', '50');
-
-  &::before {
-    content: '';
-    display:block;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-image: url('../static/svg/motif-circuit.svg');
-    background-position: center center;
-    background-repeat: repeat;
-    background-size: 200px;
-    z-index: 0;
-    opacity: .75;
-    animation: onboardingBgReveal 80s linear infinite;
-
-    @include keyframes(onboardingBgReveal) {
-      0% {
-        background-position-y: 0;
-      }
-      100% {
-        background-position-y: -2000px;
-      }
-    }
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    background-color: transparent;
-    background-image: url('../static/svg/motif-overlay.svg');
-    background-attachment: fixed;
-    background-size: cover;
-    opacity: .5;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-  }
+  color: #2d3748;
+  margin-top: 4rem;
 
   &-content {
     display: flex;
@@ -56,26 +15,37 @@
   }
 
   img {
-    height: 250px;
-    margin-bottom: 3rem;
+    height: 3rem;
+    width: 3rem;
     z-index: 2;
-    animation-duration: 2s;
-
-    @include until($tablet) {
-      height: 200px;
-    }
+    margin-bottom: 1rem !important;
   }
 
-  h1 {
-    font-size: 1.5rem;
+  .v-application & .headline {
+    font-size: 1.125rem !important;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    z-index: 2;
+    line-height: 100% !important;
+  }
+  .v-application & .subheading {
     margin-bottom: 1rem;
+    font-weight: 500 !important;
     z-index: 2;
-  }
-  h2 {
-    margin-bottom: 3rem;
-    z-index: 2;
+    font-size: 0.875rem !important;
   }
   .v-btn {
     z-index: 2;
+
+    &.home-btn {
+      border-radius: 0.5rem;
+      border: 0.0625rem solid #e4ecf7 !important;
+      background: #fff !important;
+      display: flex;
+      padding: 0 !important;
+      justify-content: center;
+      align-items: center;
+      text-transform: none;
+    }
   }
 }
