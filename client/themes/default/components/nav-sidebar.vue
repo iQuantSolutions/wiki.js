@@ -37,7 +37,7 @@
         v-icon(left) mdi-navigation
         .body-2.text-none {{$t('common:sidebar.mainMenu')}}
     //-> Custom Navigation
-    v-list.py-2(v-if='currentMode === `custom`', dense, :class='color', :dark='dark')
+    v-list.nav-static(v-if='currentMode === `custom`', dense, :class='color', :dark='dark')
       template(v-for='item of sortedItems')
         v-list-item(
           v-if='item.k === `link`'
@@ -435,6 +435,43 @@ export default {
   a {
     text-decoration: none;
     color: inherit;
+  }
+}
+
+.nav-static.v-list {
+  background: transparent !important;
+  padding: 0;
+  .v-list-item {
+    min-height: unset;
+    padding: 0;
+    margin-bottom: 0.75rem;
+    &::before {
+      display: none;
+    }
+  }
+  .v-list-item__avatar {
+    display: none;
+  }
+  .v-list-item__title {
+    font-weight: 500;
+    line-height: 1rem;
+    font-size: 0.875rem;
+    color: #2D3748 !important;
+  }
+  .v-list-item--active .v-list-item__title {
+    color: #2051E5 !important;
+  }
+  .v-divider {
+    margin: 0 0 0.75rem !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+  }
+  .v-subheader {
+    height: auto;
+    padding: 0 !important;
+    margin-bottom: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #718096 !important;
   }
 }
 </style>
