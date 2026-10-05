@@ -44,6 +44,7 @@
           :href='item.t'
           :target='item.y === `externalblank` ? `_blank` : `_self`'
           :rel='item.y === `externalblank` ? `noopener` : ``'
+          :input-value='isItemActive(item)'
           :title='item.l'
           )
           v-list-item-avatar(size='24', tile)
@@ -66,7 +67,7 @@
       template(v-slot:prepend="{ item, open }")
 
       template(v-slot:label="{ item }")
-        div(:class="['tree-item', !item.children ? 'tree-item--link' : '']" :title="formatTitle(item.name)" :style="item.path === path ? {color: '#2051E5'} : null")
+        div(:class="['tree-item', !item.children ? 'tree-item--link' : '']" :title="formatTitle(item.name)" :style="!item.children && item.path === path ? {color: '#2051E5'} : null")
           a(v-if="!item.children" :href="'/'+item.locale+'/'+item.path" :style="item.path === path ? {color: '#2051E5'} : null")
             span {{formatTitle(item.name)}}
           span(v-else) {{formatTitle(item.name)}}
@@ -148,6 +149,15 @@ export default {
     }
   },
   methods: {
+    isItemActive(item) {
+      if (item.y === 'home') {
+        return this.path === 'home'
+      }
+      if (item.y === 'page') {
+        return item.t === `/${this.locale}/${this.path}`
+      }
+      return false
+    },
     formatTitle(title) {
       return title.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
     },
@@ -333,7 +343,7 @@ export default {
           this.treeDefaultOpen.push(item.id)
         })
       }
-      const active = items.find(item => item.path == this.path)
+      const active = items.find(item => !item.children && item.path === this.path)
       if (active) {
         this.treeDefaultActive.push(active.id)
       }
