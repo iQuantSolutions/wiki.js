@@ -37,13 +37,14 @@
         v-icon(left) mdi-navigation
         .body-2.text-none {{$t('common:sidebar.mainMenu')}}
     //-> Custom Navigation
-    v-list.py-2(v-if='currentMode === `custom`', dense, :class='color', :dark='dark')
+    v-list.nav-static(v-if='currentMode === `custom`', dense, :class='color', :dark='dark')
       template(v-for='item of sortedItems')
         v-list-item(
           v-if='item.k === `link`'
           :href='item.t'
           :target='item.y === `externalblank` ? `_blank` : `_self`'
           :rel='item.y === `externalblank` ? `noopener` : ``'
+          :input-value='isItemActive(item)'
           :title='item.l'
           )
           v-list-item-avatar(size='24', tile)
@@ -66,7 +67,7 @@
       template(v-slot:prepend="{ item, open }")
 
       template(v-slot:label="{ item }")
-        div(:class="['tree-item', !item.children ? 'tree-item--link' : '']" :title="formatTitle(item.name)" :style="item.path === path ? {color: '#2051E5'} : null")
+        div(:class="['tree-item', !item.children ? 'tree-item--link' : '']" :title="formatTitle(item.name)" :style="!item.children && item.path === path ? {color: '#2051E5'} : null")
           a(v-if="!item.children" :href="'/'+item.locale+'/'+item.path" :style="item.path === path ? {color: '#2051E5'} : null")
             span {{formatTitle(item.name)}}
           span(v-else) {{formatTitle(item.name)}}
@@ -148,6 +149,15 @@ export default {
     }
   },
   methods: {
+    isItemActive(item) {
+      if (item.y === 'home') {
+        return this.path === 'home'
+      }
+      if (item.y === 'page') {
+        return item.t === `/${this.locale}/${this.path}`
+      }
+      return false
+    },
     formatTitle(title) {
       return title.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
     },
@@ -333,7 +343,7 @@ export default {
           this.treeDefaultOpen.push(item.id)
         })
       }
-      const active = items.find(item => item.path == this.path)
+      const active = items.find(item => !item.children && item.path === this.path)
       if (active) {
         this.treeDefaultActive.push(active.id)
       }
@@ -435,6 +445,43 @@ export default {
   a {
     text-decoration: none;
     color: inherit;
+  }
+}
+
+.nav-static.v-list {
+  background: transparent !important;
+  padding: 0;
+  .v-list-item {
+    min-height: unset;
+    padding: 0;
+    margin-bottom: 0.75rem;
+    &::before {
+      display: none;
+    }
+  }
+  .v-list-item__avatar {
+    display: none;
+  }
+  .v-list-item__title {
+    font-weight: 500;
+    line-height: 1rem;
+    font-size: 0.875rem;
+    color: #2D3748 !important;
+  }
+  .v-list-item--active .v-list-item__title {
+    color: #2051E5 !important;
+  }
+  .v-divider {
+    margin: 0 0 0.75rem !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+  }
+  .v-subheader {
+    height: auto;
+    padding: 0 !important;
+    margin-bottom: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #718096 !important;
   }
 }
 </style>
