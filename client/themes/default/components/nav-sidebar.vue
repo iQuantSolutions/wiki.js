@@ -442,7 +442,7 @@ export default {
     font-size: 0.875rem !important;
   }
 
-  a {
+  .v-application & a {
     text-decoration: none;
     color: inherit;
   }
