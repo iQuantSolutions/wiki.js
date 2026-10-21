@@ -50,10 +50,12 @@ v-app(
         //-   span Navigation
         v-breadcrumbs.breadcrumbs-nav.pl-0(:items="breadcrumbs", divider="/")
           template(slot="item", slot-scope="props")
-            v-icon(v-if="props.item.path === '/'", small, @click="goHome") mdi-home
+            v-icon.breadcrumbs-home(v-if="props.item.path === '/'", :class="{ 'breadcrumbs-current': isCurrentCrumb(props.item) }", small, @click="goHome") mdi-home
             v-btn.ma-0.text-capitalize(
               v-else,
-              :href="props.item.path",
+              :class="{ 'breadcrumbs-current': isCurrentCrumb(props.item) }",
+              :href="isCurrentCrumb(props.item) ? undefined : props.item.path",
+              :disabled="isCurrentCrumb(props.item)",
               small,
               text
             ) {{ props.item.name }}
@@ -116,8 +118,8 @@ v-app(
             )
               template(v-for="(tocItem, tocIdx) in tocDecoded")
                 v-list-item(@click="$vuetify.goTo(tocItem.anchor, scrollOpts)")
-                  v-icon(color="grey", small) {{ $vuetify.rtl ? `mdi-chevron-left` : `mdi-chevron-right` }}
-                  v-list-item-title.px-3 {{ tocItem.title }}
+                  v-icon(color="black", small) {{ $vuetify.rtl ? `mdi-chevron-left` : `mdi-chevron-right` }}
+                  v-list-item-title.pe-3 {{ tocItem.title }}
                 //- v-divider(v-if='tocIdx < toc.length - 1 || tocItem.children.length')
                 template(v-for="tocSubItem in tocItem.children")
                   v-list-item(
@@ -832,6 +834,9 @@ export default {
         this.navShown = false
       }
     },
+    isCurrentCrumb(item) {
+      return item.path === _.last(this.breadcrumbs).path
+    },
     goToComments(focusNewComment = false) {
       this.$vuetify.goTo('#discussion', this.scrollOpts)
       if (focusNewComment) {
@@ -846,13 +851,54 @@ export default {
 .breadcrumbs-nav {
   .v-btn {
     min-width: 0;
+    color: #2051E5 !important;
+
+    &.v-btn--disabled.breadcrumbs-current {
+      color: #2D3748 !important;
+      pointer-events: none;
+    }
+
+    &:hover,
+    &:focus,
+    &:active,
+    &.v-btn--active {
+      background-color: transparent !important;
+      box-shadow: none !important;
+    }
+
+    &::before,
+    &:hover::before,
+    &:focus::before,
+    &:active::before,
+    &.v-btn--active::before {
+      background-color: transparent !important;
+      opacity: 0 !important;
+    }
+
+    .v-ripple__container {
+      display: none !important;
+    }
   }
   .v-breadcrumbs__divider {
-    &:nth-child(2n) {
-      padding: 0 0.375rem;
+    padding: 0 !important;
+    color: #2D3748 !important;
+  }
+  .breadcrumbs-home.v-icon {
+    color: #2051E5 !important;
+    padding-right: 12px;
+    outline: none;
+
+    &.breadcrumbs-current {
+      color: #2D3748 !important;
+      pointer-events: none;
     }
-    &:nth-child(2) {
-      padding: 0 0.375rem 0 0.75rem;
+
+    &::after,
+    &:hover::after,
+    &:focus::after,
+    &:active::after {
+      display: none !important;
+      opacity: 0 !important;
     }
   }
 }

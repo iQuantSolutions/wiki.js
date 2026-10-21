@@ -323,6 +323,10 @@
   margin-top: 0.75rem !important;
 }
 
+.page-toc-card .v-list-item .v-list-item__title {
+  color: #2D3748 !important;
+}
+
 .page-col-sd .v-btn,
 .page-col-sd .v-list-item--link {
 
@@ -1688,11 +1692,22 @@
 
 .v-application .headline,
 .v-application .title {
-  font-family: Inter, sans-serif !important
+  line-height: 2rem;
+  font-family: Inter, sans-serif !important;
+  font-size: 2rem !important
 }
 
 .v-application .caption {
+  font-size: .875rem !important;
+  letter-spacing: .0333333333em !important;
+  line-height: 1.25rem;
   font-family: Inter, sans-serif !important
+}
+
+.v-application .overline {
+  font-family: Inter, sans-serif !important;
+  letter-spacing: normal !important;
+  font-weight: 500 !important
 }
 
 .overline.pa-5.pb-0.primary--text {
@@ -1722,7 +1737,7 @@
   font-size: .875rem !important
 }
 
-.v-treeview a {
+.v-application .v-treeview a {
   text-decoration: none;
   color: #2D3748;
 }
@@ -1798,7 +1813,7 @@
 .theme--light.v-footer {
   background-color: white !important;
   font-size: 0.875rem !important;
-  border-top: 1px solid rgba(0, 0, 0, .08);
+  border-top: 1px solid rgba(0, 0, 0, .08) !important;
 }
 
 .v-application .success {

@@ -37,6 +37,17 @@ export default {
     position: relative;
     margin-top: 0;
 
+    @at-root .theme--dark & {
+      &.success {
+        background-color: #13CA72 !important;
+        border-color: #13CA72 !important;
+
+        .v-icon {
+          color: #fff !important;
+        }
+      }
+    }
+
     &::after {
       content: '';
       display: block;
